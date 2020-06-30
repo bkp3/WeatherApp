@@ -1,4 +1,4 @@
-package bkp.com.weather.ui.weather.future.list
+package bkp.com.weather.ui.weather.future.detail
 
 import androidx.lifecycle.ViewModel
 import bkp.com.weather.data.provider.UnitProvider
@@ -7,12 +7,13 @@ import bkp.com.weather.internal.lazyDeferred
 import bkp.com.weather.ui.base.WeatherViewModel
 import org.threeten.bp.LocalDate
 
-class FutureListWeatherViewModel(
+class FutureDetailWeatherViewModel(
+    private val detailDate: LocalDate,
     private val forecastRepository: ForecastRepository,
     unitProvider: UnitProvider
 ) : WeatherViewModel(forecastRepository, unitProvider) {
 
-    val weatherEntries by lazyDeferred {
-        forecastRepository.getFutureWeatherList(LocalDate.now(), super.isMetricUnit)
+    val weather by lazyDeferred {
+        forecastRepository.getFutureWeatherByDate(detailDate, super.isMetricUnit)
     }
 }

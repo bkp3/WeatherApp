@@ -1,4 +1,4 @@
-package bkp.com.weather.data.db.unitlocalized
+package bkp.com.weather.data.db.unitlocalized.current
 
 interface UnitSpecificCurrentWeatherEntry {
 

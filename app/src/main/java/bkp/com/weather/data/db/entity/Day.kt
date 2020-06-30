@@ -1,4 +1,4 @@
-package bkp.com.weather.data.network.response
+package bkp.com.weather.data.db.entity
 
 
 import androidx.room.Embedded
@@ -6,7 +6,6 @@ import bkp.com.weather.data.db.entity.Condition
 import com.google.gson.annotations.SerializedName
 
 data class Day(
-    val avghumidity: Double,
     @SerializedName("avgtemp_c")
     val avgtempC: Double,
     @SerializedName("avgtemp_f")
@@ -17,14 +16,6 @@ data class Day(
     val avgvisMiles: Double,
     @Embedded(prefix = "condition_")
     val condition: Condition,
-    @SerializedName("daily_chance_of_rain")
-    val dailyChanceOfRain: String,
-    @SerializedName("daily_chance_of_snow")
-    val dailyChanceOfSnow: String,
-    @SerializedName("daily_will_it_rain")
-    val dailyWillItRain: Int,
-    @SerializedName("daily_will_it_snow")
-    val dailyWillItSnow: Int,
     @SerializedName("maxtemp_c")
     val maxtempC: Double,
     @SerializedName("maxtemp_f")

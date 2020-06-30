@@ -4,21 +4,23 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import androidx.room.TypeConverters
 import bkp.com.weather.data.db.entity.CurrentWeatherEntry
+import bkp.com.weather.data.db.entity.FutureWeatherEntry
 import bkp.com.weather.data.db.entity.WeatherLocation
 
 
 @Database(
-    entities = [CurrentWeatherEntry::class, WeatherLocation::class],
+    entities = [CurrentWeatherEntry::class, FutureWeatherEntry::class, WeatherLocation::class],
     version = 1
-
 )
-abstract class ForecastDatabase : RoomDatabase(){
-
-    abstract fun currentWeatherDao() : CurrentWeatherDao
+@TypeConverters(LocalDateConverter::class)
+abstract class ForecastDatabase : RoomDatabase() {
+    abstract fun currentWeatherDao(): CurrentWeatherDao
+    abstract fun futureWeatherDao(): FutureWeatherDao
     abstract fun weatherLocationDao(): WeatherLocationDao
 
-    companion object{
+    companion object {
         @Volatile private var instance: ForecastDatabase? = null
         private val LOCK = Any()
 
@@ -28,8 +30,7 @@ abstract class ForecastDatabase : RoomDatabase(){
 
         private fun buildDatabase(context: Context) =
             Room.databaseBuilder(context.applicationContext,
-                ForecastDatabase::class.java, "forecast.db")
+                ForecastDatabase::class.java, "futureWeatherEntries.db")
                 .build()
     }
-
 }

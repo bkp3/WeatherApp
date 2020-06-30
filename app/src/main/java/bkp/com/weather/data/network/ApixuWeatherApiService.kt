@@ -1,6 +1,7 @@
 package bkp.com.weather.data.network
 
 import bkp.com.weather.data.network.response.CurrentWeatherResponse
+import bkp.com.weather.data.network.response.FutureWeatherResponse
 import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
 import kotlinx.coroutines.Deferred
 import okhttp3.Interceptor
@@ -21,6 +22,15 @@ interface ApixuWeatherApiService {
         @Query("q") location: String,
         @Query("lang") languageCode: String = "en"
     ):Deferred<CurrentWeatherResponse>
+
+    //http://api.weatherapi.com/v1/forecast.json?key=231401ae8a6e4098bae35638202906&q=Patna&days=1
+
+    @GET("forecast.json")
+    fun getFutureWeather(
+        @Query("q") location: String,
+        @Query("days") days: Int,
+        @Query("lang") languageCode: String = "en"
+    ): Deferred<FutureWeatherResponse>
 
     companion object{
         operator fun invoke(

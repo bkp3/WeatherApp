@@ -7,8 +7,8 @@ import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import bkp.com.weather.data.db.entity.CURRENT_WEATHER_ID
 import bkp.com.weather.data.db.entity.CurrentWeatherEntry
-import bkp.com.weather.data.db.unitlocalized.ImperialCurrentWeatherEntry
-import bkp.com.weather.data.db.unitlocalized.MetricCurrentWeatherEntry
+import bkp.com.weather.data.db.unitlocalized.current.ImperialCurrentWeatherEntry
+import bkp.com.weather.data.db.unitlocalized.current.MetricCurrentWeatherEntry
 
 //import bkp.com.weather.data.db.unitlocalized.current.ImperialCurrentWeatherEntry
 //import bkp.com.weather.data.db.unitlocalized.current.MetricCurrentWeatherEntry

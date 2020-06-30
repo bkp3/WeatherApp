@@ -23,13 +23,10 @@ import org.kodein.di.KodeinAware
 import org.kodein.di.android.x.closestKodein
 import org.kodein.di.generic.instance
 
-class CurrentWeatherFragment : ScopedFragment(),KodeinAware {
+class CurrentWeatherFragment : ScopedFragment(), KodeinAware {
 
     override val kodein by closestKodein()
-
     private val viewModelFactory: CurrentWeatherViewModelFactory by instance()
-
-
 
     private lateinit var viewModel: CurrentWeatherViewModel
 
@@ -47,11 +44,9 @@ class CurrentWeatherFragment : ScopedFragment(),KodeinAware {
             .get(CurrentWeatherViewModel::class.java)
 
         bindUI()
-
-
     }
 
-    private fun bindUI() = launch{
+    private fun bindUI() = launch {
         val currentWeather = viewModel.weather.await()
 
         val weatherLocation = viewModel.weatherLocation.await()
@@ -62,7 +57,7 @@ class CurrentWeatherFragment : ScopedFragment(),KodeinAware {
         })
 
         currentWeather.observe(viewLifecycleOwner, Observer {
-            if(it == null) return@Observer
+            if (it == null) return@Observer
 
             group_loading.visibility = View.GONE
             updateDateToToday()
@@ -73,15 +68,13 @@ class CurrentWeatherFragment : ScopedFragment(),KodeinAware {
             updateVisibility(it.visibilityDistance)
 
             GlideApp.with(this@CurrentWeatherFragment)
-                .load("https:${it.conditionIconUrl}")
+                .load("http:${it.conditionIconUrl}")
                 .into(imageView_condition_icon)
-
-
         })
     }
 
     private fun chooseLocalizedUnitAbbreviation(metric: String, imperial: String): String {
-        return if (viewModel.isMetric) metric else imperial
+        return if (viewModel.isMetricUnit) metric else imperial
     }
 
     private fun updateLocation(location: String) {
@@ -116,4 +109,5 @@ class CurrentWeatherFragment : ScopedFragment(),KodeinAware {
         val unitAbbreviation = chooseLocalizedUnitAbbreviation("km", "mi.")
         textView_visibility.text = "Visibility: $visibilityDistance $unitAbbreviation"
     }
+
 }
