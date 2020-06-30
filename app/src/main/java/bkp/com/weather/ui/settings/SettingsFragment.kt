@@ -6,7 +6,7 @@ import androidx.fragment.app.Fragment
 import androidx.preference.PreferenceFragmentCompat
 import bkp.com.weather.R
 
-class SettingsFragment: PreferenceFragmentCompat(){
+class SettingsFragment : PreferenceFragmentCompat() {
 
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
         addPreferencesFromResource(R.xml.preferences)

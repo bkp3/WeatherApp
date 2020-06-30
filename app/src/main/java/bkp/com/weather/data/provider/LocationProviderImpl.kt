@@ -15,14 +15,12 @@ import kotlinx.coroutines.Deferred
 const val USE_DEVICE_LOCATION = "USE_DEVICE_LOCATION"
 const val CUSTOM_LOCATION = "CUSTOM_LOCATION"
 
-
-class LocationProviderImpl (
+class LocationProviderImpl(
     private val fusedLocationProviderClient: FusedLocationProviderClient,
     context: Context
 ) : PreferenceProvider(context), LocationProvider {
 
     private val appContext = context.applicationContext
-
 
     override suspend fun hasLocationChanged(lastWeatherLocation: WeatherLocation): Boolean {
         val deviceLocationChanged = try {
@@ -33,7 +31,6 @@ class LocationProviderImpl (
 
         return deviceLocationChanged || hasCustomLocationChanged(lastWeatherLocation)
     }
-
 
     override suspend fun getPreferredLocationString(): String {
         if (isUsingDeviceLocation()) {

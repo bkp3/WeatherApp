@@ -19,6 +19,4 @@ interface WeatherLocationDao {
 
     @Query("select * from weather_location where id = $WEATHER_LOCATION_ID")
     fun getLocationNonLive(): WeatherLocation?
-
-
 }
