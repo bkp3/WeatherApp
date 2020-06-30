@@ -12,6 +12,7 @@ import bkp.com.weather.R
 import bkp.com.weather.data.network.ApixuWeatherApiService
 import bkp.com.weather.data.network.ConnectivityInterceptorImpl
 import bkp.com.weather.data.network.WeatherNetworkDataSourceImpl
+import bkp.com.weather.internal.glide.GlideApp
 import bkp.com.weather.ui.base.ScopedFragment
 import kotlinx.android.synthetic.main.current_weather_fragment.*
 import kotlinx.coroutines.Dispatchers
@@ -52,12 +53,29 @@ class CurrentWeatherFragment : ScopedFragment(),KodeinAware {
 
     private fun bindUI() = launch{
         val currentWeather = viewModel.weather.await()
+
+        val weatherLocation = viewModel.weatherLocation.await()
+
+        weatherLocation.observe(viewLifecycleOwner, Observer { location ->
+            if (location == null) return@Observer
+            updateLocation(location.name)
+        })
+
         currentWeather.observe(viewLifecycleOwner, Observer {
             if(it == null) return@Observer
 
             group_loading.visibility = View.GONE
-            updateLocation("Kolkata")
             updateDateToToday()
+            updateTemperatures(it.temperature, it.feelsLikeTemperature)
+            updateCondition(it.conditionText)
+            updatePrecipitation(it.precipitationVolume)
+            updateWind(it.windDirection, it.windSpeed)
+            updateVisibility(it.visibilityDistance)
+
+            GlideApp.with(this@CurrentWeatherFragment)
+                .load("https:${it.conditionIconUrl}")
+                .into(imageView_condition_icon)
+
 
         })
     }
@@ -87,5 +105,15 @@ class CurrentWeatherFragment : ScopedFragment(),KodeinAware {
     private fun updatePrecipitation(precipitationVolume: Double) {
         val unitAbbreviation = chooseLocalizedUnitAbbreviation("mm", "in")
         textView_precipitation.text = "Preciptiation: $precipitationVolume $unitAbbreviation"
+    }
+
+    private fun updateWind(windDirection: String, windSpeed: Double) {
+        val unitAbbreviation = chooseLocalizedUnitAbbreviation("kph", "mph")
+        textView_wind.text = "Wind: $windDirection, $windSpeed $unitAbbreviation"
+    }
+
+    private fun updateVisibility(visibilityDistance: Double) {
+        val unitAbbreviation = chooseLocalizedUnitAbbreviation("km", "mi.")
+        textView_visibility.text = "Visibility: $visibilityDistance $unitAbbreviation"
     }
 }
