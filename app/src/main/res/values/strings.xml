@@ -1,3 +1,4 @@
 <resources>
-    <string name="app_name">Weather</string>
+    <string name="app_name">Weather Live</string>
+    <string name="bkp">\u0040bkp399</string>
 </resources>
